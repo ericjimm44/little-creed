@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Little Creed — Boxing Academy for Kids</title>
+  <meta name="description" content="Little Creed turns complete beginners into confident young boxers — one mission at a time. Skill tree, missions, mini-games and an evolving gym. Ages 7–12." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="icons/favicon-64.png" sizes="64x64" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="theme-color" content="#151a30" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Little Creed" />
+</head>
+<body>
+
+  <!-- ============ TOP BAR ============ -->
+  <header class="topbar">
+    <div class="topbar__coach" id="coachHead" aria-hidden="true"></div>
+    <div class="topbar__hello">
+      <p class="topbar__coachname">Coach Duke</p>
+      <p class="topbar__greet" id="coachGreet">Ready to work, champ?</p>
+    </div>
+    <div class="topbar__stats">
+      <span class="chip chip--streak" id="chipStreak" title="Day streak">🔥 0</span>
+      <span class="chip chip--xp" id="chipXP" title="XP">⭐ 0</span>
+      <span class="chip chip--coin" id="chipCoins" title="Coins">🪙 0</span>
+      <button class="chip chip--sound" id="soundBtn" title="Sound on/off" aria-label="Toggle sound">🔔</button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ============ JOURNEY (skill tree) ============ -->
+    <section class="tabpane is-active" id="pane-journey">
+      <div class="heroCard" id="heroCard">
+        <div class="heroCard__text">
+          <p class="heroCard__eyebrow" id="heroBelt">White Belt · The First Bell</p>
+          <h1 class="heroCard__title" id="heroTitle">Mission 1<br />The Fighting Stance</h1>
+          <p class="heroCard__coach" id="heroCoachline">Coach says: “Every champion starts with how they stand.”</p>
+          <button class="btn btn--go" id="heroStart">Start mission&nbsp;&nbsp;▶</button>
+        </div>
+        <div class="heroCard__boxer" id="heroBoxer" aria-hidden="true"></div>
+      </div>
+      <div class="beltbar" id="beltBar" aria-label="Belt progress"></div>
+      <div class="path" id="path"></div>
+    </section>
+
+    <!-- ============ TRAINING CAMP ============ -->
+    <section class="tabpane" id="pane-camp">
+      <div class="campHead">
+        <h2 class="pane__title">Training <em>Camp</em></h2>
+        <p class="pane__sub" id="campSub">A fresh training day, built just for you. Finish every station to stamp today's camp!</p>
+      </div>
+      <div class="campList" id="campList"></div>
+      <div class="campDone" id="campDoneBox" hidden>
+        <p class="campDone__big">⛺ Camp complete!</p>
+        <p class="campDone__sub" id="campDoneSub"></p>
+      </div>
+      <div class="campCta">
+        <button class="btn btn--go" id="campFinish" disabled>Finish camp&nbsp;&nbsp;🏁</button>
+        <button class="btn btn--ghost" id="campReroll">New plan&nbsp;&nbsp;🎲</button>
+      </div>
+    </section>
+
+    <!-- ============ MY GYM ============ -->
+    <section class="tabpane" id="pane-gym">
+      <div class="gymHead">
+        <h2 class="pane__title" id="gymName">The Garage</h2>
+        <p class="pane__sub" id="gymDesc">One bulb, a mat, and a dream.</p>
+      </div>
+      <div class="gymScene" id="gymScene" aria-label="Your gym"></div>
+      <div class="gymNext" id="gymNext"></div>
+
+      <h3 class="minihead">Your boxer</h3>
+      <div class="dressing">
+        <div class="dressing__avatar" id="avatarBox" aria-hidden="true"></div>
+        <div class="dressing__shop" id="shopBox"></div>
+      </div>
+
+      <h3 class="minihead">Badges</h3>
+      <div class="badges" id="badgeGrid"></div>
+    </section>
+
+    <!-- ============ PARENTS ============ -->
+    <section class="tabpane" id="pane-parents">
+      <div class="gate" id="parentGate">
+        <p class="gate__emoji">🔒</p>
+        <h2 class="pane__title">Parents' <em>Corner</em></h2>
+        <p class="pane__sub">Grown-ups only! Solve this to enter:</p>
+        <p class="gate__q" id="gateQ">What is 6 × 7?</p>
+        <form class="gate__form" id="gateForm">
+          <input type="number" id="gateA" inputmode="numeric" aria-label="Answer" required />
+          <button class="btn btn--go" type="submit">Enter</button>
+        </form>
+        <p class="gate__nope" id="gateNope" hidden>Not quite — ask a grown-up!</p>
+      </div>
+
+      <div class="parentBoard" id="parentBoard" hidden>
+        <h2 class="pane__title">Parents' <em>Corner</em></h2>
+        <div class="pstats" id="pStats"></div>
+        <h3 class="minihead">Last 7 days</h3>
+        <div class="weekbars" id="weekBars"></div>
+        <h3 class="minihead">Skills mastered</h3>
+        <div class="pskills" id="pSkills"></div>
+        <h3 class="minihead">Milestones</h3>
+        <ul class="pmiles" id="pMiles"></ul>
+        <h3 class="minihead">Safety &amp; coaching tips</h3>
+        <ul class="ptips" id="pTips"></ul>
+        <p class="pnote">Little Creed is 100% shadowboxing and bodyweight play — no contact, ever. All data stays on this device. Not affiliated with any film or studio.</p>
+        <button class="btn btn--ghost" id="gateLock">Lock parents' corner</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ MISSION PLAYER (full-screen) ============ -->
+  <div class="mission" id="mission" hidden>
+    <div class="mission__top">
+      <button class="mission__close" id="mClose" aria-label="Leave mission">✕</button>
+      <div class="mission__progress" id="mProg"></div>
+    </div>
+    <div class="mission__body" id="mBody"></div>
+  </div>
+
+  <!-- confetti canvas -->
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
+  <!-- ============ TAB BAR ============ -->
+  <nav class="tabbar" aria-label="App sections">
+    <button class="tabbar__tab is-active" data-pane="journey"><span class="tabbar__ico">🗺️</span><span>Journey</span></button>
+    <button class="tabbar__tab" data-pane="camp"><span class="tabbar__ico">⛺</span><span>Camp</span></button>
+    <button class="tabbar__tab" data-pane="gym"><span class="tabbar__ico">🏟️</span><span>My Gym</span></button>
+    <button class="tabbar__tab" data-pane="parents"><span class="tabbar__ico">🧑‍🤝‍🧑</span><span>Parents</span></button>
+  </nav>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("sw.js").catch(() => { /* offline unavailable */ });
+      });
+    }
+  </script>
+</body>
+</html>
