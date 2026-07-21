@@ -89,41 +89,43 @@ function boxerSVG(opts) {
   const glove = o.glove || gearColor("gloves", "#e03131");
   const trunks = o.trunks || gearColor("trunks", "#2b3a67");
   const band = o.band !== undefined ? o.band : gearColor("band", null);
-  const skin = "#f6c99f";
+  const skin = "#f2c191";
+  const ink = "#3a2e20";
   return `
   <svg class="bx" viewBox="0 0 120 150" aria-hidden="true">
-    <g class="bx-all">
+    <g class="bx-all" stroke="${ink}" stroke-width="2.4">
       <g class="bx-legs">
         <rect x="44" y="104" width="12" height="28" rx="6" fill="${skin}"/>
         <rect class="bx-leg-b" x="64" y="104" width="12" height="28" rx="6" fill="${skin}"/>
-        <rect x="40" y="128" width="20" height="10" rx="5" fill="#333a49"/>
-        <rect class="bx-shoe-b" x="61" y="128" width="20" height="10" rx="5" fill="#333a49"/>
+        <rect x="40" y="128" width="20" height="10" rx="5" fill="#4a3b2a"/>
+        <rect class="bx-shoe-b" x="61" y="128" width="20" height="10" rx="5" fill="#4a3b2a"/>
       </g>
       <g class="bx-body">
-        <rect x="38" y="66" width="44" height="34" rx="12" fill="#fdfdfb"/>
+        <rect x="38" y="66" width="44" height="34" rx="12" fill="#2a9d8f"/>
         <rect x="38" y="88" width="44" height="20" rx="9" fill="${trunks}"/>
-        <rect x="38" y="86" width="44" height="5" rx="2.5" fill="#f5b301"/>
+        <rect x="38" y="86" width="44" height="5" rx="2.5" fill="#e0a72e"/>
         <g class="bx-head">
           <circle cx="60" cy="40" r="24" fill="${skin}"/>
           ${band ? `<path d="M37 32 a24 24 0 0 1 46 0 l0 8 a24 24 0 0 0 -46 0 z" fill="${band}"/>` : ""}
-          <circle class="bx-eye" cx="52" cy="42" r="2.6" fill="#232838"/>
-      <circle class="bx-eye" cx="68" cy="42" r="2.6" fill="#232838"/>
-          <path class="bx-smile" d="M53 51 q7 6 14 0" stroke="#232838" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-          <ellipse cx="47" cy="48" rx="3.4" ry="2.2" fill="#f0a884" opacity="0.7"/>
-          <ellipse cx="73" cy="48" rx="3.4" ry="2.2" fill="#f0a884" opacity="0.7"/>
+          <path d="M38 30 a24 24 0 0 1 33 -12 q-2 8 -14 9 q12 1 17 8 l-8 2 z" fill="#6b4a2a" stroke-width="2"/>
+          <circle class="bx-eye" cx="52" cy="42" r="2.6" fill="${ink}" stroke="none"/>
+          <circle class="bx-eye" cx="68" cy="42" r="2.6" fill="${ink}" stroke="none"/>
+          <path class="bx-smile" d="M53 51 q7 6 14 0" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+          <ellipse cx="47" cy="48" rx="3.4" ry="2.2" fill="#e79c73" opacity="0.7" stroke="none"/>
+          <ellipse cx="73" cy="48" rx="3.4" ry="2.2" fill="#e79c73" opacity="0.7" stroke="none"/>
         </g>
         <g class="bx-arm bx-arm-l">
           <rect x="28" y="70" width="12" height="22" rx="6" fill="${skin}"/>
           <g class="bx-glove bx-glove-l">
             <circle cx="30" cy="62" r="12" fill="${glove}"/>
-            <circle cx="25" cy="66" r="5" fill="${glove}" stroke="#00000022" stroke-width="1.5"/>
+            <circle cx="25" cy="66" r="5" fill="${glove}" stroke-width="1.8"/>
           </g>
         </g>
         <g class="bx-arm bx-arm-r">
           <rect x="80" y="70" width="12" height="22" rx="6" fill="${skin}"/>
           <g class="bx-glove bx-glove-r">
             <circle cx="90" cy="62" r="12" fill="${glove}"/>
-            <circle cx="95" cy="66" r="5" fill="${glove}" stroke="#00000022" stroke-width="1.5"/>
+            <circle cx="95" cy="66" r="5" fill="${glove}" stroke-width="1.8"/>
           </g>
         </g>
       </g>
@@ -133,14 +135,14 @@ function boxerSVG(opts) {
 function coachSVG() {
   return `
   <svg viewBox="0 0 80 80" aria-hidden="true">
-    <circle cx="40" cy="40" r="38" fill="#233054"/>
-    <circle cx="40" cy="44" r="26" fill="#a9713d"/>
-    <path d="M14 40 a26 26 0 0 1 52 0 l0 -6 a26 26 0 0 0 -52 0 z" fill="#3b3f4c"/>
-    <rect x="12" y="30" width="56" height="8" rx="4" fill="#3b3f4c"/>
-    <circle cx="31" cy="46" r="3" fill="#1c2030"/>
-    <circle cx="49" cy="46" r="3" fill="#1c2030"/>
-    <path d="M30 57 q10 7 20 0" stroke="#1c2030" stroke-width="3" fill="none" stroke-linecap="round"/>
-    <path d="M24 38 q7 -4 12 0 M44 38 q7 -4 12 0" stroke="#e8e6df" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <circle cx="40" cy="40" r="37" fill="#f8e3c9" stroke="#3a2e20" stroke-width="2.5"/>
+    <circle cx="40" cy="44" r="26" fill="#a9713d" stroke="#3a2e20" stroke-width="2.5"/>
+    <path d="M14 40 a26 26 0 0 1 52 0 l0 -6 a26 26 0 0 0 -52 0 z" fill="#8a8578" stroke="#3a2e20" stroke-width="2"/>
+    <rect x="12" y="30" width="56" height="8" rx="4" fill="#8a8578" stroke="#3a2e20" stroke-width="2"/>
+    <circle cx="31" cy="46" r="3" fill="#2e2618"/>
+    <circle cx="49" cy="46" r="3" fill="#2e2618"/>
+    <path d="M30 57 q10 7 20 0" stroke="#2e2618" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M24 38 q7 -4 12 0 M44 38 q7 -4 12 0" stroke="#efe6d5" stroke-width="3.5" fill="none" stroke-linecap="round"/>
   </svg>`;
 }
 
@@ -660,6 +662,7 @@ function renderCelebration(body, sk) {
 
   body.innerHTML = `
     <div class="mphase mphase--party">
+      <div class="powburst">${choice(["POW!", "BOOM!", "WHAM!", "CRASH!", "BAM!"])}</div>
       <p class="party__pop">${first ? "SKILL MASTERED!" : "SHARPENED!"}</p>
       <h2 class="mission__title">${sk.emoji} ${sk.name}</h2>
       <div class="coachcard">
@@ -823,86 +826,88 @@ $("#campReroll").addEventListener("click", () => {
 function gymSceneSVG(stage) {
   const s = stage; // 0..6
   const has = (n) => s >= n;
+  const ink = "#3a2e20";
   return `
   <svg viewBox="0 0 360 220" class="gymsvg" aria-hidden="true">
     <defs>
       <linearGradient id="wallg" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="${has(6) ? "#1b2450" : "#2a3050"}"/>
-        <stop offset="1" stop-color="${has(6) ? "#2c1a45" : "#20263f"}"/>
+        <stop offset="0" stop-color="${has(6) ? "#f2dca8" : "#e9d9b5"}"/>
+        <stop offset="1" stop-color="${has(6) ? "#e5bb84" : "#ddc99d"}"/>
       </linearGradient>
       <radialGradient id="lampg" cx="0.5" cy="0" r="1">
-        <stop offset="0" stop-color="#ffe9a3" stop-opacity="0.3"/>
-        <stop offset="1" stop-color="#ffe9a3" stop-opacity="0"/>
+        <stop offset="0" stop-color="#f7d87c" stop-opacity="0.45"/>
+        <stop offset="1" stop-color="#f7d87c" stop-opacity="0"/>
       </radialGradient>
     </defs>
     <rect width="360" height="180" fill="url(#wallg)"/>
-    <rect y="180" width="360" height="40" fill="${has(3) ? "#4a3b63" : "#3a3348"}"/>
-    <rect y="176" width="360" height="6" fill="#00000033"/>
+    <rect y="180" width="360" height="40" fill="${has(3) ? "#a97e4f" : "#b08d5f"}"/>
+    <rect y="176" width="360" height="6" fill="#3a2e2033"/>
+    <line x1="0" y1="180" x2="360" y2="180" stroke="${ink}" stroke-width="2.5"/>
 
     ${has(6) ? `
-      <polygon points="60,0 130,180 190,180 100,0" fill="#fff7d1" opacity="0.16"/>
-      <polygon points="300,0 230,180 170,180 260,0" fill="#fff7d1" opacity="0.16"/>` : `
-      <rect x="172" y="0" width="4" height="26" fill="#151a2c"/>
-      <circle cx="174" cy="32" r="9" fill="#ffe9a3"/>
+      <polygon points="60,0 130,180 190,180 100,0" fill="#fff3c9" opacity="0.5"/>
+      <polygon points="300,0 230,180 170,180 260,0" fill="#fff3c9" opacity="0.5"/>` : `
+      <rect x="172" y="0" width="4" height="26" fill="${ink}"/>
+      <circle cx="174" cy="32" r="9" fill="#f7d87c" stroke="${ink}" stroke-width="2"/>
       <ellipse cx="174" cy="60" rx="60" ry="46" fill="url(#lampg)"/>`}
 
     ${has(5) ? `
-      <g opacity="0.95">
-        <rect x="0" y="120" width="360" height="26" fill="#141a30"/>
+      <g>
+        <rect x="0" y="120" width="360" height="26" fill="#8a5c3a" stroke="${ink}" stroke-width="2"/>
         ${Array.from({ length: 18 }, (_, i) => `
-          <circle cx="${12 + i * 20}" cy="${130 + (i % 2) * 5}" r="7" fill="${["#c98a5a", "#8a5a3a", "#e3b088", "#6a4a32"][i % 4]}"/>
-          <rect x="${5 + i * 20}" y="${137 + (i % 2) * 5}" width="14" height="9" rx="3" fill="${["#5a6a9a", "#9a5a6a", "#5a9a7a", "#9a8a5a"][i % 4]}"/>`).join("")}
+          <circle cx="${12 + i * 20}" cy="${130 + (i % 2) * 5}" r="7" fill="${["#c98a5a", "#8a5a3a", "#e3b088", "#6a4a32"][i % 4]}" stroke="${ink}" stroke-width="1.5"/>
+          <rect x="${5 + i * 20}" y="${137 + (i % 2) * 5}" width="14" height="9" rx="3" fill="${["#4a7fb5", "#c73a2e", "#2a9d8f", "#e0a72e"][i % 4]}" stroke="${ink}" stroke-width="1.5"/>`).join("")}
       </g>` : `
-      <rect x="22" y="56" width="50" height="60" rx="4" fill="#1a2140" stroke="#4a5378" stroke-width="2"/>
-      <path d="M47 66 l3.5 8 8.8 0.8 -6.6 5.8 2 8.6 -7.7 -4.6 -7.7 4.6 2 -8.6 -6.6 -5.8 8.8 -0.8 z" fill="#f5b301"/>
-      <rect x="32" y="94" width="30" height="5" rx="2.5" fill="#8a93b8"/>
-      <rect x="37" y="103" width="20" height="4" rx="2" fill="#5a6488"/>`}
+      <rect x="22" y="56" width="50" height="60" rx="4" fill="#fdf6e6" stroke="${ink}" stroke-width="2.5"/>
+      <path d="M47 66 l3.5 8 8.8 0.8 -6.6 5.8 2 8.6 -7.7 -4.6 -7.7 4.6 2 -8.6 -6.6 -5.8 8.8 -0.8 z" fill="#e0a72e" stroke="${ink}" stroke-width="1.5"/>
+      <rect x="32" y="94" width="30" height="5" rx="2.5" fill="#b3a284"/>
+      <rect x="37" y="103" width="20" height="4" rx="2" fill="#c5b696"/>`}
 
     ${has(1) ? `
       <g class="g-bag">
-        <rect x="296" y="30" width="4" height="18" fill="#20263f"/>
-        <rect x="284" y="48" width="28" height="58" rx="12" fill="#b0413e"/>
-        <rect x="284" y="48" width="28" height="12" rx="6" fill="#8f2f2d"/>
-        <rect x="295" y="70" width="6" height="20" rx="3" fill="#ffffff22"/>
+        <rect x="296" y="30" width="4" height="18" fill="${ink}"/>
+        <rect x="284" y="48" width="28" height="58" rx="12" fill="#c73a2e" stroke="${ink}" stroke-width="2.5"/>
+        <rect x="284" y="48" width="28" height="12" rx="6" fill="#9c2b21" stroke="${ink}" stroke-width="2"/>
+        <rect x="295" y="70" width="6" height="20" rx="3" fill="#ffffff44"/>
       </g>` : ""}
 
     ${has(2) ? `
-      <rect x="238" y="34" width="34" height="8" rx="3" fill="#6b5335"/>
-      <rect x="252" y="42" width="4" height="8" fill="#20263f"/>
-      <g class="g-speed"><ellipse cx="254" cy="60" rx="10" ry="13" fill="#e8a10a"/></g>
-      <rect x="90" y="52" width="34" height="46" rx="3" fill="#22294a" stroke="#4a5378" stroke-width="2"/>
-      <circle cx="107" cy="68" r="8" fill="#e03131"/>
-      <rect x="97" y="82" width="20" height="4" rx="2" fill="#8a93b8"/>
-      <rect x="100" y="89" width="14" height="3" rx="1.5" fill="#8a93b8"/>` : ""}
+      <rect x="238" y="34" width="34" height="8" rx="3" fill="#8a5c3a" stroke="${ink}" stroke-width="2"/>
+      <rect x="252" y="42" width="4" height="8" fill="${ink}"/>
+      <g class="g-speed"><ellipse cx="254" cy="60" rx="10" ry="13" fill="#e0a72e" stroke="${ink}" stroke-width="2.5"/></g>
+      <rect x="90" y="52" width="34" height="46" rx="3" fill="#d9c69b" stroke="${ink}" stroke-width="2.5"/>
+      <circle cx="107" cy="68" r="8" fill="#c73a2e" stroke="${ink}" stroke-width="2"/>
+      <rect x="97" y="82" width="20" height="4" rx="2" fill="#8a765a"/>
+      <rect x="100" y="89" width="14" height="3" rx="1.5" fill="#8a765a"/>` : ""}
 
     ${has(3) ? `
       <g>
-        <rect x="120" y="98" width="150" height="86" rx="6" fill="#2d3760"/>
-        <rect x="120" y="98" width="150" height="10" rx="5" fill="#3d4a7d"/>
+        <rect x="120" y="98" width="150" height="86" rx="6" fill="#8a5c3a" stroke="${ink}" stroke-width="2.5"/>
+        <rect x="120" y="98" width="150" height="10" rx="5" fill="#a3714a" stroke="${ink}" stroke-width="2"/>
         ${[0, 1].map(k => `
-          <rect x="${124 + k * 138}" y="70" width="8" height="46" rx="3" fill="#e03131"/>
-          <circle cx="${128 + k * 138}" cy="68" r="6" fill="#f5b301"/>`).join("")}
-        <line x1="128" y1="84" x2="266" y2="84" stroke="#f0f2ff" stroke-width="3"/>
-        <line x1="128" y1="96" x2="266" y2="96" stroke="#e03131" stroke-width="3"/>
-        <line x1="128" y1="108" x2="266" y2="108" stroke="#3f8efc" stroke-width="3"/>
+          <rect x="${124 + k * 138}" y="70" width="8" height="46" rx="3" fill="#c73a2e" stroke="${ink}" stroke-width="2"/>
+          <circle cx="${128 + k * 138}" cy="68" r="6" fill="#e0a72e" stroke="${ink}" stroke-width="2"/>`).join("")}
+        <line x1="128" y1="84" x2="266" y2="84" stroke="#fdf6e6" stroke-width="3"/>
+        <line x1="128" y1="96" x2="266" y2="96" stroke="#c73a2e" stroke-width="3"/>
+        <line x1="128" y1="108" x2="266" y2="108" stroke="#4a7fb5" stroke-width="3"/>
       </g>` : ""}
 
     ${has(4) ? `
-      <g>
-        <path d="M150 8 h32 l0 26 -16 -9 -16 9 z" fill="#e03131"/>
-        <path d="M192 8 h32 l0 26 -16 -9 -16 9 z" fill="#3f8efc"/>
-        <path d="M234 8 h32 l0 26 -16 -9 -16 9 z" fill="#f5b301"/>
-        <rect x="18" y="112" width="76" height="8" rx="3" fill="#6b5335"/>
+      <g stroke="${ink}" stroke-width="2">
+        <path d="M150 8 h32 l0 26 -16 -9 -16 9 z" fill="#c73a2e"/>
+        <path d="M192 8 h32 l0 26 -16 -9 -16 9 z" fill="#4a7fb5"/>
+        <path d="M234 8 h32 l0 26 -16 -9 -16 9 z" fill="#e0a72e"/>
+        <rect x="18" y="112" width="76" height="8" rx="3" fill="#8a5c3a"/>
         ${[0, 1, 2].map(k => `
-          <path d="M${30 + k * 24} 96 h12 v10 a6 6 0 0 1 -12 0 z" fill="#f5b301"/>
-          <rect x="${33 + k * 24}" y="106" width="6" height="6" fill="#c98a08"/>`).join("")}
+          <path d="M${30 + k * 24} 96 h12 v10 a6 6 0 0 1 -12 0 z" fill="#e0a72e"/>
+          <rect x="${33 + k * 24}" y="106" width="6" height="6" fill="#b9820f"/>`).join("")}
       </g>` : ""}
 
     ${has(6) ? `
-      <rect x="96" y="30" width="168" height="26" rx="8" fill="#f5b301"/>
-      <text x="180" y="48" text-anchor="middle" font-family="'Baloo 2',sans-serif" font-weight="800" font-size="14" fill="#5c3a00">CHAMPIONSHIP NIGHT</text>
-      <circle cx="60" cy="24" r="10" fill="#ffe9a3"><animate attributeName="opacity" values="1;0.4;1" dur="1.6s" repeatCount="indefinite"/></circle>
-      <circle cx="300" cy="24" r="10" fill="#ffe9a3"><animate attributeName="opacity" values="0.4;1;0.4" dur="1.6s" repeatCount="indefinite"/></circle>` : ""}
+      <rect x="96" y="30" width="168" height="26" rx="8" fill="#e0a72e" stroke="${ink}" stroke-width="2.5"/>
+      <text x="180" y="48" text-anchor="middle" font-family="'Bangers','Baloo 2',sans-serif" font-size="15" letter-spacing="1" fill="${ink}">CHAMPIONSHIP NIGHT</text>
+      <circle cx="60" cy="24" r="10" fill="#f7d87c" stroke="${ink}" stroke-width="2"><animate attributeName="opacity" values="1;0.4;1" dur="1.6s" repeatCount="indefinite"/></circle>
+      <circle cx="300" cy="24" r="10" fill="#f7d87c" stroke="${ink}" stroke-width="2"><animate attributeName="opacity" values="0.4;1;0.4" dur="1.6s" repeatCount="indefinite"/></circle>` : ""}
   </svg>`;
 }
 
