@@ -1,5 +1,5 @@
 /* Little Creed — offline-first service worker */
-const CACHE = "little-creed-v1";
+const CACHE = "little-creed-v2";
 const ASSETS = [
   ".",
   "index.html",
