@@ -69,6 +69,19 @@
       </div>
     </section>
 
+    <!-- ============ TEAM (partner rounds) ============ -->
+    <section class="tabpane" id="pane-team">
+      <div class="campHead">
+        <h2 class="pane__title">Team <em>Training</em></h2>
+        <p class="pane__sub">Gloves on! Grab a grown-up. These workouts use real pads and reactions — the app calls the shots, your grown-up holds the target.</p>
+      </div>
+      <div class="grownup" >
+        <span>🧑‍🏫</span>
+        <p><strong>For the grown-up:</strong> you're the coach. Keep it light and fun — pads and gloves only, never the head. You always control the pace.</p>
+      </div>
+      <div class="partnerList" id="partnerList"></div>
+    </section>
+
     <!-- ============ MY GYM ============ -->
     <section class="tabpane" id="pane-gym">
       <div class="gymHead">
@@ -113,7 +126,7 @@
         <ul class="pmiles" id="pMiles"></ul>
         <h3 class="minihead">Safety &amp; coaching tips</h3>
         <ul class="ptips" id="pTips"></ul>
-        <p class="pnote">Little Creed is 100% shadowboxing and bodyweight play — no contact, ever. All data stays on this device. Not affiliated with any film or studio.</p>
+        <p class="pnote">Solo missions and camps are 100% shadowboxing. The optional <strong>Team</strong> workouts add gloves-on pad work and light reaction drills with a grown-up — pads and body only, never the head, grown-up sets the pace. All data stays on this device. Not affiliated with any film or studio.</p>
         <button class="btn btn--ghost" id="gateLock">Lock parents' corner</button>
       </div>
     </section>
@@ -128,6 +141,15 @@
     <div class="mission__body" id="mBody"></div>
   </div>
 
+  <!-- ============ TEAM ROUNDS PLAYER (full-screen) ============ -->
+  <div class="mission" id="partnerOv" hidden>
+    <div class="mission__top">
+      <button class="mission__close" id="paClose" aria-label="Leave workout">✕</button>
+      <div class="mission__progress" id="paProg"></div>
+    </div>
+    <div class="mission__body" id="paBody"></div>
+  </div>
+
   <!-- confetti canvas -->
   <canvas id="confetti" aria-hidden="true"></canvas>
 
@@ -135,7 +157,8 @@
   <nav class="tabbar" aria-label="App sections">
     <button class="tabbar__tab is-active" data-pane="journey"><span class="tabbar__ico">🗺️</span><span>Journey</span></button>
     <button class="tabbar__tab" data-pane="camp"><span class="tabbar__ico">⛺</span><span>Camp</span></button>
-    <button class="tabbar__tab" data-pane="gym"><span class="tabbar__ico">🏟️</span><span>My Gym</span></button>
+    <button class="tabbar__tab" data-pane="team"><span class="tabbar__ico">🥊</span><span>Team</span></button>
+    <button class="tabbar__tab" data-pane="gym"><span class="tabbar__ico">🏟️</span><span>Gym</span></button>
     <button class="tabbar__tab" data-pane="parents"><span class="tabbar__ico">🧑‍🤝‍🧑</span><span>Parents</span></button>
   </nav>
 

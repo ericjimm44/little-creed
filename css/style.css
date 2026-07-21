@@ -811,6 +811,90 @@ main { max-width: 640px; margin: 0 auto; padding: 0 16px; }
 .pnote { margin: 18px 0; font-size: 0.86rem; color: var(--ink-dim); }
 
 /* ============================================================
+   TEAM (partner rounds)
+   ============================================================ */
+.grownup {
+  display: flex; gap: 10px; align-items: flex-start;
+  background: #e7eef0; border: 2.5px solid var(--line);
+  border-radius: 16px 20px 16px 6px; box-shadow: 2px 3px 0 rgba(58, 46, 32, 0.15);
+  padding: 12px 14px; margin: 14px 0 18px;
+}
+.grownup span { font-size: 1.5rem; }
+.grownup p { font-size: 0.98rem; color: var(--ink-soft); }
+.grownup strong { color: var(--teal); }
+
+.partnerList { display: flex; flex-direction: column; gap: 12px; padding-bottom: 30px; }
+.pcard {
+  display: flex; gap: 13px; align-items: center; width: 100%; text-align: left;
+  background: var(--card); border: 3px solid var(--line);
+  border-radius: 12px 16px 12px 18px; box-shadow: var(--shadow);
+  padding: 14px;
+  transition: transform 0.12s ease;
+}
+.pcard:nth-child(even) { transform: rotate(0.4deg); }
+.pcard:nth-child(odd) { transform: rotate(-0.4deg); }
+.pcard:active { transform: scale(0.98); }
+.pcard__emoji { font-size: 2rem; flex: none; }
+.pcard__text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.pcard__text em { font-style: normal; font-family: var(--font-display); font-size: 0.76rem; letter-spacing: 0.08em; color: var(--gold-deep); }
+.pcard__text strong { font-family: var(--font-display); font-size: 1.35rem; letter-spacing: 0.02em; }
+.pcard__gear { font-size: 0.86rem; color: var(--ink-dim); }
+.pcard__go {
+  flex: none; width: 46px; height: 46px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #e9695c 0%, var(--red) 70%);
+  border: 2.5px solid var(--line); color: #fff6e8; font-size: 1.1rem;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 2px 3px 0 rgba(58, 46, 32, 0.25);
+}
+
+.pgear {
+  width: 100%; max-width: 440px; text-align: left;
+  background: var(--card); border: 2.5px solid var(--line);
+  border-radius: 12px; padding: 12px 14px; box-shadow: 2px 3px 0 rgba(58, 46, 32, 0.12);
+}
+.pgear__h { font-family: var(--font-display); font-size: 0.95rem; letter-spacing: 0.05em; color: var(--gold-deep); margin-bottom: 4px; }
+.pgear ul { list-style: none; display: flex; flex-direction: column; gap: 3px; }
+.pgear li { font-size: 0.98rem; color: var(--ink-soft); }
+
+.psteps { width: 100%; max-width: 440px; display: flex; flex-direction: column; gap: 8px; }
+.pstep {
+  display: flex; gap: 11px; align-items: flex-start; text-align: left;
+  background: var(--card); border: 2px solid var(--line); border-radius: 12px; padding: 11px 12px;
+}
+.pstep > span {
+  flex: none; width: 26px; height: 26px; border-radius: 50%;
+  background: var(--gold); border: 2px solid var(--line); color: var(--ink);
+  font-family: var(--font-display); display: flex; align-items: center; justify-content: center; font-size: 0.95rem;
+}
+.pstep strong { font-family: var(--font-display); font-size: 1.05rem; letter-spacing: 0.02em; }
+.pstep p { color: var(--ink-soft); font-size: 0.92rem; margin-top: 2px; }
+
+.safety {
+  width: 100%; max-width: 440px; text-align: left;
+  background: #f3e0c4; border: 2.5px dashed var(--red);
+  border-radius: 12px 16px 12px 18px; padding: 13px 14px;
+}
+.safety__h { font-family: var(--font-display); font-size: 1rem; letter-spacing: 0.03em; color: var(--red-deep); margin-bottom: 8px; }
+.safety__row {
+  display: flex; gap: 10px; align-items: flex-start; padding: 6px 0;
+  font-size: 0.96rem; color: var(--ink); cursor: pointer;
+}
+.safety__row input {
+  flex: none; width: 22px; height: 22px; margin-top: 1px;
+  accent-color: var(--red); cursor: pointer;
+}
+.pdisclaim { font-size: 0.8rem; color: var(--ink-dim); max-width: 40ch; }
+
+.pcaller {
+  font-family: var(--font-display); letter-spacing: 0.04em;
+  font-size: clamp(2.4rem, 12vw, 4rem); line-height: 1; color: var(--red);
+  min-height: 1.1em; text-align: center;
+  text-shadow: 3px 3px 0 rgba(58, 46, 32, 0.15);
+}
+.pcaller.is-hit { animation: cuePop 0.35s cubic-bezier(0.2, 2, 0.4, 1); }
+@keyframes cuePop { 0% { transform: scale(0.5) rotate(-4deg); opacity: 0.4; } 100% { transform: scale(1) rotate(0); opacity: 1; } }
+
+/* ============================================================
    COACH TOAST
    ============================================================ */
 .coachToast {

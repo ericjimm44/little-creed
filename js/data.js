@@ -563,12 +563,99 @@ const BADGES = [
   { id: "puncher",   e: "🥊", name: "Real Puncher",     d: "Master the whole Orange Belt" },
   { id: "defense",   e: "🛡️", name: "Untouchable",      d: "Master the whole Blue Belt" },
   { id: "champion",  e: "🏆", name: "Champion",         d: "Master every skill in the academy" },
+  { id: "partner",   e: "🤝", name: "Tag Team",         d: "Finish a partner workout with a grown-up" },
+];
+
+/* ---------- Partner Rounds (grown-up + kid, gloves on) ----------
+   The grown-up is the coach here, so cards speak to THEM.
+   mode: "learn"  — guided steps, gentle encouragement calls
+         "pads"   — grown-up holds mitts/cushions, app calls punches
+         "defense"— grown-up throws slow, light shots; app calls the answer
+   Every call has { say } (spoken aloud) and { show } (big on screen).  */
+const PARTNER = [
+  {
+    id: "gloveup", name: "Glove Up", emoji: "🥊", mode: "learn",
+    stage: "Getting started · no pads yet",
+    gear: ["Kids' boxing gloves (6–8 oz)", "A clear 2×2 m space", "Water"],
+    parentCue: "This one's about getting comfortable IN the gloves before any target work. Help them get the gloves on snug, then do the respect glove-touch — that little tap is how every round begins and ends.",
+    steps: [
+      { t: "Wrists first", d: "Slide each hand in, fist closed. Pull the strap firm (not tight) around the wrist and press the velcro. Snug gloves = safe gloves." },
+      { t: "Make a fist", d: "Have them squeeze a proper fist inside the glove — knuckles flat, thumb OUTSIDE and wrapped over the fingers, never tucked in." },
+      { t: "The glove touch", d: "Face each other, both tap gloves gently. 'Good luck, have fun.' Every round starts and ends with this — it's respect." },
+      { t: "Stance check", d: "Both of you get in your boxing stance facing each other. Mirror them. Guard up by the cheeks, chin down, knees soft." },
+    ],
+    rounds: 2, work: 40, rest: 25, callEvery: 8,
+    pool: [
+      { say: "Guard up!", show: "GUARD UP" }, { say: "Stay bouncy!", show: "BOUNCE" },
+      { say: "Show me your stance!", show: "STANCE" }, { say: "Looking sharp!", show: "SHARP ✨" },
+      { say: "Chin down!", show: "CHIN DOWN" },
+    ],
+    xp: 60,
+  },
+  {
+    id: "pads1", name: "First Targets", emoji: "🎯", mode: "pads",
+    stage: "Pad work · your first real target",
+    gear: ["Kids' gloves", "Focus mitts — or two firm couch cushions", "Water"],
+    parentCue: "Hold the pads (or cushions) up at HIS shoulder height, palms facing him, arms bent and braced. When the app calls a punch, give him that target. Absorb it — don't push back. Praise every single one!",
+    rounds: 3, work: 40, rest: 30, callEvery: 5,
+    pool: [
+      { say: "Jab!", show: "JAB" },
+      { say: "Jab!", show: "JAB" },
+      { say: "One... two!", show: "1 – 2" },
+      { say: "Double jab!", show: "JAB JAB" },
+      { say: "One two!", show: "1 – 2" },
+      { say: "Nice and easy... jab!", show: "JAB" },
+    ],
+    xp: 90,
+  },
+  {
+    id: "pads2", name: "Combo Targets", emoji: "🔥", mode: "pads",
+    stage: "Pad work · putting punches together",
+    gear: ["Kids' gloves", "Focus mitts or firm cushions", "Water"],
+    parentCue: "Same as before, but now combos. Move the pads a little between rounds so he has to aim. Keep calling out great feedback — 'beautiful one-two!' After each combo, have him reset his guard before the next call.",
+    rounds: 3, work: 45, rest: 30, callEvery: 6,
+    pool: [
+      { say: "One... two!", show: "1 – 2" },
+      { say: "One two, hook!", show: "1 – 2 – 3" },
+      { say: "Double jab, cross!", show: "JAB JAB – 2" },
+      { say: "Body jab!", show: "BODY JAB" },
+      { say: "High jab, low jab!", show: "HIGH – LOW" },
+      { say: "One two, back to guard!", show: "1 – 2 – GUARD" },
+    ],
+    xp: 110,
+  },
+  {
+    id: "reactions", name: "Catch & Block", emoji: "🛡️", mode: "defense",
+    stage: "Reactions · gloves on, super light",
+    gear: ["Kids' gloves for both of you", "Water"],
+    parentCue: "YOU throw slow, light jabs toward his GLOVES — never his face, never with power. Move at half speed. The app tells him how to answer each one. This teaches real reactions with zero risk. If he misses, slow down and smile — it's a game.",
+    safetyExtra: "Aim for the gloves only. No head contact. Half speed the whole way.",
+    rounds: 3, work: 40, rest: 30, callEvery: 6,
+    pool: [
+      { say: "Block it!", show: "BLOCK 🧤" },
+      { say: "Catch it!", show: "CATCH" },
+      { say: "Slip left!", show: "SLIP ◀" },
+      { say: "Slip right!", show: "SLIP ▶" },
+      { say: "Step back!", show: "STEP BACK" },
+      { say: "Block, then jab back!", show: "BLOCK → JAB" },
+    ],
+    xp: 120,
+  },
+];
+
+/* Safety checklist shown before every contact round. */
+const PARTNER_SAFETY = [
+  "Gloves are on and snug on both of us",
+  "The space is clear — no sharp corners or furniture",
+  "We'll keep it light and controlled — pads and body only, never the head",
+  "Water is nearby and we'll break between rounds",
 ];
 
 /* ---------- Parent tips ---------- */
 const PARENT_TIPS = [
   "Sessions are designed for 15–25 minutes. Short and consistent beats long and rare — especially at ages 7–12.",
-  "All drills are shadowboxing and bodyweight play. No contact, no sparring, no equipment required (a pillow makes a great first target).",
+  "Solo missions are 100% shadowboxing. The new Team workouts add gloves-on pad work with a grown-up — the safest way to get a child used to real gloves and a moving target. Keep it light: pads and body only, never the head.",
+  "For Team pad work you'll want kids' 6–8 oz gloves and a pair of focus mitts (couch cushions work to start). The grown-up always controls the pace.",
   "Clear a 2×2 metre space free of sharp corners, and train in shoes or grippy socks.",
   "Water break between every round — kids overheat faster than adults.",
   "Praise effort and form, not toughness. 'Your stance looked so solid!' goes further than 'be tough'.",

@@ -15,7 +15,7 @@ const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
 const KEY = "littleCreedV1";
 const DEFAULT_STATE = {
   xp: 0, coins: 0, streak: 0, bestStreak: 0, lastDay: null,
-  mastered: [], gamesWon: 0, campsDone: 0,
+  mastered: [], gamesWon: 0, campsDone: 0, partnersDone: 0,
   log: {},                                     // "YYYY-MM-DD" -> minutes practiced
   owned: ["glove-red", "trunk-navy"],
   equip: { gloves: "glove-red", trunks: "trunk-navy", band: null },
@@ -77,6 +77,18 @@ const sfx = {
   win:  () => [523, 659, 784, 1047].forEach((f, i) => tone(f, 0.22, "triangle", 0.12, i * 0.11)),
   coin: () => { tone(988, 0.09, "square", 0.07); tone(1319, 0.16, "square", 0.07, 0.08); },
 };
+
+/* ---------------- spoken coach voice (Web Speech API) ---------------- */
+function say(text) {
+  if (!S.sound || !("speechSynthesis" in window)) return;
+  try {
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 1.02; u.pitch = 1.15; u.volume = 1;
+    speechSynthesis.cancel();
+    speechSynthesis.speak(u);
+  } catch { /* voice unavailable */ }
+}
+function stopVoice() { try { if ("speechSynthesis" in window) speechSynthesis.cancel(); } catch { /* noop */ } }
 
 /* ---------------- boxer SVG (avatar + demos) ---------------- */
 function gearColor(kind, fallback) {
@@ -195,6 +207,7 @@ function checkBadges(announce) {
   if (beltDone(2)) earn("puncher");
   if (beltDone(4)) earn("defense");
   if (S.mastered.length >= SKILLS.length) earn("champion");
+  if (S.partnersDone >= 1) earn("partner");
 }
 
 /* ============================================================
@@ -1040,6 +1053,182 @@ function renderParents() {
 }
 
 /* ============================================================
+   TEAM — partner rounds (grown-up + kid, gloves on)
+   ============================================================ */
+function renderPartner() {
+  const list = $("#partnerList");
+  list.innerHTML = PARTNER.map(r => `
+    <button class="pcard" data-p="${r.id}">
+      <span class="pcard__emoji">${r.emoji}</span>
+      <span class="pcard__text">
+        <em>${r.stage}</em>
+        <strong>${r.name}</strong>
+        <span class="pcard__gear">🧰 ${r.gear.join(" · ")}</span>
+      </span>
+      <span class="pcard__go">▶</span>
+    </button>`).join("");
+  $$(".pcard", list).forEach(b => b.addEventListener("click", () => openPartner(b.dataset.p)));
+}
+
+let PA = null; // { routine, phase, round, timers }
+function openPartner(id) {
+  const r = PARTNER.find(x => x.id === id);
+  if (!r) return;
+  PA = { routine: r };
+  $("#partnerOv").hidden = false;
+  document.body.classList.add("no-scroll");
+  renderPartnerCard();
+}
+function closePartner() {
+  stopTimers(); stopVoice();
+  PA = null;
+  $("#partnerOv").hidden = true;
+  document.body.classList.remove("no-scroll");
+  renderAll();
+}
+$("#paClose").addEventListener("click", () => {
+  if (PA && PA.phase === "rounds") { if (!confirm("Leave this workout?")) return; }
+  closePartner();
+});
+
+/* intro card: gear, grown-up cue, safety checklist gate */
+function renderPartnerCard() {
+  const r = PA.routine; PA.phase = "card";
+  $("#paProg").innerHTML = "";
+  const stepsHTML = r.steps ? `
+    <div class="psteps">
+      ${r.steps.map((s, i) => `<div class="pstep"><span>${i + 1}</span><div><strong>${s.t}</strong><p>${s.d}</p></div></div>`).join("")}
+    </div>` : "";
+  const checks = PARTNER_SAFETY.concat(r.safetyExtra ? [r.safetyExtra] : []);
+  $("#paBody").innerHTML = `
+    <div class="mphase">
+      <p class="mission__eyebrow">Team workout · ${r.stage}</p>
+      <h2 class="mission__title">${r.emoji} ${r.name}</h2>
+      <div class="coachcard">
+        <div class="coachcard__face">${coachSVG()}</div>
+        <p><strong>Grown-up:</strong> ${r.parentCue}</p>
+      </div>
+      <div class="pgear">
+        <p class="pgear__h">You'll need</p>
+        <ul>${r.gear.map(g => `<li>🧰 ${g}</li>`).join("")}</ul>
+      </div>
+      ${stepsHTML}
+      <div class="safety">
+        <p class="safety__h">🛡️ Grown-up, tap each to confirm:</p>
+        ${checks.map((c, i) => `
+          <label class="safety__row"><input type="checkbox" data-chk="${i}" /> <span>${c}</span></label>`).join("")}
+      </div>
+      <button class="btn btn--go btn--big" id="paStart" disabled>Start the rounds&nbsp;&nbsp;🔔</button>
+      <p class="pdisclaim">Light and controlled — pads and body only, never the head. The grown-up sets the pace and stops any time.</p>
+    </div>`;
+
+  const boxes = $$('[data-chk]', $("#paBody"));
+  const startBtn = $("#paStart");
+  const refresh = () => { startBtn.disabled = !boxes.every(b => b.checked); };
+  boxes.forEach(b => b.addEventListener("change", () => { sfx.pop(); refresh(); }));
+  startBtn.addEventListener("click", () => { sfx.bell(); runPartnerRounds(); });
+}
+
+/* the rounds: countdown timer + spoken/animated combo caller */
+function runPartnerRounds() {
+  stopTimers();
+  const r = PA.routine; PA.phase = "rounds";
+  $("#paBody").innerHTML = `
+    <div class="mphase">
+      <p class="mission__eyebrow" id="paStage">Round 1 of ${r.rounds}</p>
+      <div class="pcaller" id="paCue">GET READY…</div>
+      <div class="ptimer">
+        <div class="ptimer__ring">
+          <svg viewBox="0 0 120 120">
+            <circle class="ptimer__track" cx="60" cy="60" r="52"/>
+            <circle class="ptimer__fill" id="paFill" cx="60" cy="60" r="52"/>
+          </svg>
+          <div class="ptimer__mid">
+            <span class="ptimer__phase" id="paPhase">READY</span>
+            <span class="ptimer__num" id="paNum">${r.work}</span>
+          </div>
+        </div>
+        <p class="ptimer__coach" id="paNote">Gloves up — here we go!</p>
+      </div>
+      <button class="btn btn--ghost btn--sm" id="paStop">End workout</button>
+    </div>`;
+  $("#paStop").addEventListener("click", () => { if (confirm("End this workout?")) closePartner(); });
+
+  const CIRC = 2 * Math.PI * 52;
+  const fill = $("#paFill");
+  fill.style.strokeDasharray = CIRC;
+  const setRing = (frac) => { fill.style.strokeDashoffset = CIRC * (1 - frac); };
+
+  let round = 1, phase = "work", left = r.work, since = -1;
+
+  function callOne() {
+    const c = choice(r.pool);
+    const cue = $("#paCue");
+    cue.textContent = c.show;
+    cue.classList.remove("is-hit"); void cue.offsetWidth; cue.classList.add("is-hit");
+    say(c.say); sfx.pop();
+  }
+  function startPhase(p) {
+    phase = p; left = (p === "work") ? r.work : r.rest; since = -1;
+    if (p === "work") {
+      $("#paPhase").textContent = "BOX!"; $("#paStage").textContent = `Round ${round} of ${r.rounds}`;
+      $("#paNote").textContent = choice(COACH.practice); sfx.bell();
+    } else {
+      $("#paPhase").textContent = "REST"; $("#paCue").textContent = "💧 Water!";
+      $("#paNote").textContent = "Great work — shake it out, sip some water."; say("Rest. Water break."); sfx.ding();
+    }
+    tick();
+    tickInt = setInterval(tick, 1000);
+  }
+  function tick() {
+    $("#paNum").textContent = left;
+    setRing(left / (phase === "work" ? r.work : r.rest));
+    if (phase === "work") {
+      since++;
+      if (since % r.callEvery === 0 && left > 1) callOne();
+    }
+    if (left <= 0) {
+      clearInterval(tickInt);
+      if (phase === "work") {
+        addMinutes(r.work / 60); save();
+        if (round >= r.rounds) return finishRounds();
+        startPhase("rest");
+      } else { round++; startPhase("work"); }
+      return;
+    }
+    if (left <= 3 && phase === "work") sfx.pop();
+    left--;
+  }
+  function finishRounds() {
+    stopVoice();
+    S.partnersDone = (S.partnersDone || 0) + 1;
+    S.xp += r.xp; S.coins += 20;
+    markActiveDay(); checkBadges(true); save();
+    say("Amazing work, champ!");
+    $("#paBody").innerHTML = `
+      <div class="mphase mphase--party">
+        <div class="powburst">TEAM!</div>
+        <p class="party__pop">WORKOUT COMPLETE</p>
+        <h2 class="mission__title">🤝 ${r.name}</h2>
+        <div class="coachcard">
+          <div class="coachcard__face">${coachSVG()}</div>
+          <p><strong>Coach Duke:</strong> ${choice(COACH.celebrate)} Give your grown-up a glove touch!</p>
+        </div>
+        <div class="party__loot">
+          <span class="loot">⭐ +${r.xp} XP</span>
+          <span class="loot">🪙 +20 coins</span>
+          ${S.streak > 1 ? `<span class="loot">🔥 ${S.streak}-day streak</span>` : ""}
+        </div>
+        <button class="btn btn--go btn--big" id="paDone">Back to Team&nbsp;&nbsp;🥊</button>
+      </div>`;
+    confettiBurst(); sfx.win();
+    $("#paDone").addEventListener("click", () => closePartner());
+  }
+
+  startPhase("work");
+}
+
+/* ============================================================
    TABS & BOOT
    ============================================================ */
 function switchPane(name) {
@@ -1047,6 +1236,7 @@ function switchPane(name) {
   $$(".tabbar__tab").forEach(t => t.classList.toggle("is-active", t.dataset.pane === name));
   if (name === "gym") renderGym();
   if (name === "camp") renderCamp();
+  if (name === "team") renderPartner();
   window.scrollTo({ top: 0 });
 }
 $$(".tabbar__tab").forEach(t => t.addEventListener("click", () => { sfx.pop(); switchPane(t.dataset.pane); }));
